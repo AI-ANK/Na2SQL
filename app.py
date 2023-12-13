@@ -86,6 +86,11 @@ class StreamlitChatPack(BaseLlamaPack):
             return sql_database, service_context, engine
 
         sql_database, service_context, engine = load_db_llm()
+
+
+        inspector = inspect(engine)
+        # Get list of tables in the database
+        table_names = inspector.get_table_names()
         # Dropdown for table selection and data display
         selected_table = st.selectbox("Select a Table to Display", table_names)
         if selected_table:
