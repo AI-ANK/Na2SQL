@@ -22,7 +22,7 @@ from llama_index import (
     VectorStoreIndex,
     load_index_from_storage,
 )
-
+import sqlite3
 
 from llama_index import SQLDatabase, ServiceContext
 from llama_index.indices.struct_store import NLSQLTableQueryEngine
