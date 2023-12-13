@@ -23,6 +23,7 @@ from llama_index import (
     load_index_from_storage,
 )
 
+
 from llama_index import SQLDatabase, ServiceContext
 from llama_index.indices.struct_store import NLSQLTableQueryEngine
 
@@ -73,6 +74,11 @@ class StreamlitChatPack(BaseLlamaPack):
                 message
             )  # Add response to message history
 
+        def get_table_data(table_name, conn):
+            query = f"SELECT * FROM {table_name}"
+            df = pd.read_sql_query(query, conn)
+            return df
+
         @st.cache_resource
         def load_db_llm():
             # Load the SQLite database
@@ -89,20 +95,27 @@ class StreamlitChatPack(BaseLlamaPack):
         sql_database, service_context, engine = load_db_llm()
 
 
-        inspector = inspect(engine)
-        # Get list of tables in the database
-        table_names = inspector.get_table_names()
-        # Dropdown for table selection and data display
+       # Connect to the SQLite database
+        db_file = 'ecommerce_platform1.db'
+        conn = sqlite3.connect(db_file)
+    
+        # Retrieve a list of all tables in the database
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        tables = cursor.fetchall()
+        table_names = [table[0] for table in tables]
+    
+        # Dropdown for table selection
         selected_table = st.selectbox("Select a Table to Display", table_names)
+    
+        # Display the selected table
         if selected_table:
-            # Fetch and display table data
-            with engine.connect() as connection:
-                query = text(f"SELECT * FROM {selected_table}")
-                result = connection.execute(query)
-                data = result.fetchall()
-                columns = [col['name'] for col in inspector.get_columns(selected_table)]
-                df = pd.DataFrame(data, columns=columns)  # Create a DataFrame
-                st.dataframe(df)  # Display the DataFrame
+            df = get_table_data(selected_table, conn)
+            st.write(f"Data for table '{selected_table}':")
+            st.dataframe(df)
+    
+        # Close the connection
+        conn.close()
                 
         st.sidebar.title("Prototype developed by:")
         st.sidebar.write('[Harshad Suryawanshi]()')
