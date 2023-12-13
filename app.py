@@ -1,5 +1,5 @@
 import streamlit as st
-from sqlalchemy import create_engine, inspect
+from sqlalchemy import create_engine, inspect, text
 from typing import Dict, Any
 
 from llama_index import (
