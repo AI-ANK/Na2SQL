@@ -4,3 +4,4 @@ SQLAlchemy
 openai
 llama-index
 google-generativeai
+transformers
