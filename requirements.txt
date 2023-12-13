@@ -1,6 +1,6 @@
 streamlit-pills
 streamlit
-sqlalchemy
+SQLAlchemy
 openai
 llama-index
 google-generativeai
