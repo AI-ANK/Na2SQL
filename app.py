@@ -87,8 +87,8 @@ class StreamlitChatPack(BaseLlamaPack):
 
         sql_database, service_context, engine = load_db_llm()
         
-        # Sidebar for database schema viewer
-        st.sidebar.title("Database Schema Viewer")
+        # Main page for table selection and display
+        st.subheader("Database Table Viewer")
 
         # Create an inspector object
         inspector = inspect(engine)
@@ -96,16 +96,16 @@ class StreamlitChatPack(BaseLlamaPack):
         # Get list of tables in the database
         table_names = inspector.get_table_names()
 
-        # Sidebar selection for tables
-        selected_table = st.sidebar.selectbox("Select a Table", table_names)
+        # Main page selection for tables
+        selected_table = st.selectbox("Select a Table to View", table_names)
 
-        # Display the columns of the selected table
+        # Display the contents of the selected table
         if selected_table:
-            st.sidebar.subheader(f"Columns in {selected_table}:")
-            columns = inspector.get_columns(selected_table)
-            for column in columns:
-                st.sidebar.text(f"{column['name']} ({column['type']})")
-
+            query = f"SELECT * FROM {selected_table}"
+            result_set = engine.execute(query)
+            df = pd.DataFrame(result_set.fetchall(), columns=result_set.keys())
+            st.dataframe(df)
+            
         st.sidebar.title("Prototype developed by:")
         st.sidebar.write('[Harshad Suryawanshi]()')
         
