@@ -11,6 +11,7 @@ from llama_index.llama_pack.base import BaseLlamaPack
 from llama_index.llms import OpenAI
 import openai
 import os
+import pandas as pd
 
 from llama_index.llms.palm import PaLM
 
@@ -94,12 +95,14 @@ class StreamlitChatPack(BaseLlamaPack):
         # Dropdown for table selection and data display
         selected_table = st.selectbox("Select a Table to Display", table_names)
         if selected_table:
+            # Fetch and display table data
             with engine.connect() as connection:
                 query = text(f"SELECT * FROM {selected_table}")
                 result = connection.execute(query)
                 data = result.fetchall()
                 columns = [col['name'] for col in inspector.get_columns(selected_table)]
-                st.dataframe(data, columns=columns)
+                df = pd.DataFrame(data, columns=columns)  # Create a DataFrame
+                st.dataframe(df)  # Display the DataFrame
                 
         st.sidebar.title("Prototype developed by:")
         st.sidebar.write('[Harshad Suryawanshi]()')
