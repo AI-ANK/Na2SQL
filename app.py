@@ -93,14 +93,14 @@ class StreamlitChatPack(BaseLlamaPack):
         table_names = inspector.get_table_names()
         # Dropdown for table selection and data display
         selected_table = st.selectbox("Select a Table to Display", table_names)
-    if selected_table:
-        with engine.connect() as connection:
-            query = text(f"SELECT * FROM {selected_table}")
-            result = connection.execute(query)
-            data = result.fetchall()
-            columns = [col['name'] for col in inspector.get_columns(selected_table)]
-            st.dataframe(data, columns=columns)
-            
+        if selected_table:
+            with engine.connect() as connection:
+                query = text(f"SELECT * FROM {selected_table}")
+                result = connection.execute(query)
+                data = result.fetchall()
+                columns = [col['name'] for col in inspector.get_columns(selected_table)]
+                st.dataframe(data, columns=columns)
+                
         st.sidebar.title("Prototype developed by:")
         st.sidebar.write('[Harshad Suryawanshi]()')
         
