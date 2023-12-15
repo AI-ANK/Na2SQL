@@ -26,11 +26,11 @@ Welcome to the Natural Language to SQL demo project using LlamaIndex! This appli
 
 ## Setup and Usage
 ### Clone the Repository
-git clone https://github.com/YourGitHubUsername/your-repository-name
+```git clone https://github.com/YourGitHubUsername/your-repository-name```
 ### Install Required Packages
-pip install -r requirements.txt
+```pip install -r requirements.txt```
 ### Run the Streamlit App
-streamlit run app.py
+```streamlit run app.py```
 
 
 ## Feedback and Contributions
