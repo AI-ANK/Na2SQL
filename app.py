@@ -46,7 +46,6 @@ class StreamlitChatPack(BaseLlamaPack):
     def run(self, *args: Any, **kwargs: Any) -> Any:
         """Run the pipeline."""
         import streamlit as st
-        from streamlit_pills import pills
 
         st.set_page_config(
             page_title=f"{self.page}",
@@ -121,23 +120,12 @@ class StreamlitChatPack(BaseLlamaPack):
                 
         st.sidebar.title("Prototype developed by:")
         st.sidebar.write('[Harshad Suryawanshi]()')
-        
-        selected = pills(
-            "Choose a question to get started or write your own below.",
-            [
-                "Test1",
-                "Test2?",
-                "Test3",
-            ],
-            clearable=True,
-            index=None,
-        )
-
+    
         if "query_engine" not in st.session_state:  # Initialize the query engine
             st.session_state["query_engine"] = NLSQLTableQueryEngine(
                 sql_database=sql_database,
     #            tables=["ASSET_BETAS_TS"],
-                synthesize_response=False,
+                synthesize_response=True,
                 service_context=service_context
             )
 
@@ -145,18 +133,6 @@ class StreamlitChatPack(BaseLlamaPack):
             with st.chat_message(message["role"]):
                 st.write(message["content"])
 
-        if selected:
-            with st.chat_message("user"):
-                st.write(selected)
-            with st.chat_message("assistant"):
-                response = st.session_state["query_engine"].query(selected)
-                sql_query = f"""Query: {response.metadata["sql_query"]} \\n
-                            Response:"{response.response}"""
-
-                response_container = st.empty()
-                response_container.write(sql_query)
-                add_to_message_history("user", selected)
-                add_to_message_history("assistant", sql_query)
 
         if prompt := st.chat_input(
             "Enter your natural language query about the database"
@@ -170,13 +146,11 @@ class StreamlitChatPack(BaseLlamaPack):
             with st.spinner():
                 with st.chat_message("assistant"):
                     response = st.session_state["query_engine"].query("User Question:"+prompt+". ")
-                    sql_query = f"""Query: {response.metadata["sql_query"]} \\n
-                                Response:"{response.response}"""
+                    sql_query = f"**Query:**\n```\n{response.metadata['sql_query']}\n```\n**Response:**\n```\n{response.response}\n```"
                     response_container = st.empty()
                     response_container.write(sql_query)
                     # st.write(response.response)
                     add_to_message_history("assistant", sql_query)
-
 
 if __name__ == "__main__":
     StreamlitChatPack(run_from_main=True).run()
