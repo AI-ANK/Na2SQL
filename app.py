@@ -113,8 +113,8 @@ class StreamlitChatPack(BaseLlamaPack):
         # Display the selected table
         if selected_table:
             df = get_table_data(selected_table, conn)
-            st.write(f"Data for table '{selected_table}':")
-            st.dataframe(df)
+            st.sidebar.text(f"Data for table '{selected_table}':")
+            st.sidebar.dataframe(df)
     
         # Close the connection
         conn.close()
