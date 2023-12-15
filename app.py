@@ -27,6 +27,9 @@ import sqlite3
 from llama_index import SQLDatabase, ServiceContext
 from llama_index.indices.struct_store import NLSQLTableQueryEngine
 
+os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+
+
 class StreamlitChatPack(BaseLlamaPack):
 
     def __init__(
