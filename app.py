@@ -26,7 +26,7 @@ import sqlite3
 
 from llama_index import SQLDatabase, ServiceContext
 from llama_index.indices.struct_store import NLSQLTableQueryEngine
-db_name = 'ecommerce_platform3.db'
+db_name = 'ecommerce_platform1.db'
 
 class StreamlitChatPack(BaseLlamaPack):
 
