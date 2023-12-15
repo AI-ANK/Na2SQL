@@ -86,7 +86,9 @@ class StreamlitChatPack(BaseLlamaPack):
             sql_database = SQLDatabase(engine) #include all tables
 
             # Initialize LLM
-            llm2 = PaLM(api_key=os.environ["GOOGLE_API_KEY"])  # Replace with your API key
+            #llm2 = PaLM(api_key=os.environ["GOOGLE_API_KEY"])  # Replace with your API key
+            llm2 = OpenAI(temperature=0.1, model="gpt-3.5-turbo-1106")
+
             service_context = ServiceContext.from_defaults(llm=llm2, embed_model="local")
             
             return sql_database, service_context, engine
