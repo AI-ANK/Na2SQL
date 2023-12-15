@@ -26,6 +26,7 @@ import sqlite3
 
 from llama_index import SQLDatabase, ServiceContext
 from llama_index.indices.struct_store import NLSQLTableQueryEngine
+db_name = 'ecommerce_platform3.db'
 
 class StreamlitChatPack(BaseLlamaPack):
 
@@ -82,7 +83,7 @@ class StreamlitChatPack(BaseLlamaPack):
         @st.cache_resource
         def load_db_llm():
             # Load the SQLite database
-            engine = create_engine("sqlite:///ecommerce_platform1.db")
+            engine = create_engine(f"sqlite:///{db_name}")
             #sql_database = SQLDatabase(engine, include_tables=["ASSET_BETAS_TS"]) #specify the tables
             sql_database = SQLDatabase(engine) #include all tables
 
@@ -95,18 +96,20 @@ class StreamlitChatPack(BaseLlamaPack):
         sql_database, service_context, engine = load_db_llm()
 
 
-       # Connect to the SQLite database
-        db_file = 'ecommerce_platform1.db'
+       # Sidebar for database schema viewer
+        st.sidebar.title("Database Schema Viewer")
+
+        # Create an inspector object
+        inspector = inspect(engine)
+
+        # Get list of tables in the database
+        table_names = inspector.get_table_names()
+
+        # Sidebar selection for tables
+        selected_table = st.sidebar.selectbox("Select a Table", table_names)
+
+        db_file = db_name
         conn = sqlite3.connect(db_file)
-    
-        # Retrieve a list of all tables in the database
-        cursor = conn.cursor()
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        tables = cursor.fetchall()
-        table_names = [table[0] for table in tables]
-    
-        # Dropdown for table selection
-        selected_table = st.selectbox("Select a Table to Display", table_names)
     
         # Display the selected table
         if selected_table:
