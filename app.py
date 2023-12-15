@@ -26,7 +26,6 @@ import sqlite3
 
 from llama_index import SQLDatabase, ServiceContext
 from llama_index.indices.struct_store import NLSQLTableQueryEngine
-db_name = 'ecommerce_platform1.db'
 
 class StreamlitChatPack(BaseLlamaPack):
 
@@ -83,7 +82,7 @@ class StreamlitChatPack(BaseLlamaPack):
         @st.cache_resource
         def load_db_llm():
             # Load the SQLite database
-            engine = create_engine(f"sqlite:///{db_name}")
+            engine = create_engine("sqlite:///ecommerce_platform1.db")
             #sql_database = SQLDatabase(engine, include_tables=["ASSET_BETAS_TS"]) #specify the tables
             sql_database = SQLDatabase(engine) #include all tables
 
@@ -108,7 +107,7 @@ class StreamlitChatPack(BaseLlamaPack):
         # Sidebar selection for tables
         selected_table = st.sidebar.selectbox("Select a Table", table_names)
 
-        db_file = db_name
+        db_file = 'ecommerce_platform1.db'
         conn = sqlite3.connect(db_file)
     
         # Display the selected table
