@@ -124,7 +124,7 @@ class StreamlitChatPack(BaseLlamaPack):
         conn.close()
                 
         # Sidebar Intro
-        st.sidebar.markdown('## Created By')
+        st.sidebar.markdown('## App Created By')
         st.sidebar.markdown("""
         Harshad Suryawanshi 
         - [Linkedin](https://www.linkedin.com/in/harshadsuryawanshi/)
