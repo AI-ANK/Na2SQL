@@ -151,7 +151,7 @@ class StreamlitChatPack(BaseLlamaPack):
             with st.spinner():
                 with st.chat_message("assistant"):
                     response = st.session_state["query_engine"].query("User Question:"+prompt+". ")
-                    sql_query = f"**Query:**\n```\n{response.metadata['sql_query']}\n```\n**Response:**\n```\n{response.response}\n```"
+                    sql_query = f"```sql\n{response.metadata['sql_query']}\n```\n**Response:**\n{response.response}\n"
                     response_container = st.empty()
                     response_container.write(sql_query)
                     # st.write(response.response)
