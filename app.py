@@ -126,10 +126,8 @@ class StreamlitChatPack(BaseLlamaPack):
         # Sidebar Intro
         st.sidebar.markdown('## App Created By')
         st.sidebar.markdown("""
-        Harshad Suryawanshi 
-        - [Linkedin](https://www.linkedin.com/in/harshadsuryawanshi/)
-        - [Medium](https://harshadsuryawanshi.medium.com/)
-        - [X](https://twitter.com/HarshadSurya1c)
+        Harshad Suryawanshi: 
+        [Linkedin](https://www.linkedin.com/in/harshadsuryawanshi/), [Medium](https://harshadsuryawanshi.medium.com/), [X](https://twitter.com/HarshadSurya1c)
         """)
         
         
