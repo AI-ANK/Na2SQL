@@ -85,7 +85,6 @@ class StreamlitChatPack(BaseLlamaPack):
         def load_db_llm():
             # Load the SQLite database
             engine = create_engine("sqlite:///ecommerce_platform1.db")
-            #sql_database = SQLDatabase(engine, include_tables=["ASSET_BETAS_TS"]) #specify the tables
             sql_database = SQLDatabase(engine) #include all tables
 
             # Initialize LLM
