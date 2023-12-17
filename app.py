@@ -146,7 +146,6 @@ class StreamlitChatPack(BaseLlamaPack):
         if "query_engine" not in st.session_state:  # Initialize the query engine
             st.session_state["query_engine"] = NLSQLTableQueryEngine(
                 sql_database=sql_database,
-    #            tables=["ASSET_BETAS_TS"],
                 synthesize_response=True,
                 service_context=service_context
             )
