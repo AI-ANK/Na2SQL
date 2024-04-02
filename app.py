@@ -2,20 +2,23 @@ import streamlit as st
 from sqlalchemy import create_engine, inspect, text
 from typing import Dict, Any
 
-from llama_index import (
+from llama_index.core import (
     VectorStoreIndex,
     ServiceContext,
     download_loader,
 )
-from llama_index.llama_pack.base import BaseLlamaPack
-from llama_index.llms import OpenAI
+from llama_index.core import Settings
+
+from llama_index.core.llama_pack import BaseLlamaPack
+from llama_index.llms.openai import OpenAI
 import openai
 import os
 import pandas as pd
 
-from llama_index.llms.palm import PaLM
+# from llama_index.llms.palm import PaLM
 
-from llama_index import (
+
+from llama_index.core import (
     SimpleDirectoryReader,
     ServiceContext,
     StorageContext,
@@ -24,8 +27,10 @@ from llama_index import (
 )
 import sqlite3
 
-from llama_index import SQLDatabase, ServiceContext
-from llama_index.indices.struct_store import NLSQLTableQueryEngine
+
+from llama_index.core import SQLDatabase, ServiceContext
+
+from llama_index.core.query_engine import NLSQLTableQueryEngine
 
 os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 
@@ -91,11 +96,11 @@ class StreamlitChatPack(BaseLlamaPack):
 
             # Initialize LLM
             #llm2 = PaLM(api_key=os.environ["GOOGLE_API_KEY"])  # Replace with your API key
-            llm2 = OpenAI(temperature=0.1, model="gpt-3.5-turbo-1106")
+            Settings.llm = OpenAI(temperature=0.1, model="gpt-3.5-turbo-1106")
 
-            service_context = ServiceContext.from_defaults(llm=llm2, embed_model="local")
+            Settings.embed_model = "local:BAAI/bge-base-en-v1.5"
             
-            return sql_database, service_context, engine
+            return sql_database, Settings, engine
 
         sql_database, service_context, engine = load_db_llm()
 

@@ -6,3 +6,4 @@ llama-index
 google-generativeai
 transformers
 torch
+llama-index-embeddings-huggingface
