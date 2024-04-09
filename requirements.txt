@@ -4,5 +4,4 @@ SQLAlchemy==2.0.29
 openai==1.16.1
 llama-index==0.10.26
 google-generativeai==0.4.1
-transformers==4.39.3
 llama-index-embeddings-huggingface==0.2.0

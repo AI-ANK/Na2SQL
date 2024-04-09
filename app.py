@@ -98,7 +98,7 @@ class StreamlitChatPack(BaseLlamaPack):
             #llm2 = PaLM(api_key=os.environ["GOOGLE_API_KEY"])  # Replace with your API key
             Settings.llm = OpenAI(temperature=0.1, model="gpt-3.5-turbo-1106")
 
-            Settings.embed_model = "local:BAAI/bge-base-en-v1.5"
+            #Settings.embed_model = "local:BAAI/bge-base-en-v1.5"
             
             return sql_database, Settings, engine
 
