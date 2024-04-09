@@ -32,7 +32,7 @@ from llama_index.core import SQLDatabase, ServiceContext
 
 from llama_index.core.query_engine import NLSQLTableQueryEngine
 
-os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+#os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 
 
 class StreamlitChatPack(BaseLlamaPack):
