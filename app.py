@@ -14,6 +14,7 @@ from llama_index.llms.openai import OpenAI
 import openai
 import os
 import pandas as pd
+from streamlit_pills import pills
 
 # from llama_index.llms.palm import PaLM
 
@@ -74,6 +75,10 @@ class StreamlitChatPack(BaseLlamaPack):
             f"Explore Snowflake views with this AI-powered app. Pose any question and receive exact SQL queries.",
             icon="ℹ️",
         )
+        # Define the pills with emojis
+        query_options = ["None", "In a markdown table format show which users bought '4K LED Smart TV', their purchase date and their location", "In a markdown table show all the products bought under books category and their reviews", "Analyse all the reviews for Electronics category and list points of improvements in a table"]
+        # emojis = ["👥", "📅", "🏷️"]
+        selected_query = pills("Select example queries or enter your own query in the chat input below", query_options, key="query_pills")
 
         def add_to_message_history(role, content):
             message = {"role": role, "content": str(content)}
@@ -143,10 +148,15 @@ class StreamlitChatPack(BaseLlamaPack):
             with st.chat_message(message["role"]):
                 st.write(message["content"])
 
+        # Always show the chat input
+        prompt = st.chat_input("Enter your natural language query about the database")
 
-        if prompt := st.chat_input(
-            "Enter your natural language query about the database"
-        ):  # Prompt for user input and save to chat history
+        # If a pill is selected, override the chat input with the pill's value
+        if selected_query and selected_query!="None":
+            prompt = selected_query
+
+        # Handle the prompt logic
+        if prompt:
             with st.chat_message("user"):
                 st.write(prompt)
             add_to_message_history("user", prompt)
