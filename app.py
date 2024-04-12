@@ -66,7 +66,7 @@ class StreamlitChatPack(BaseLlamaPack):
         )
 
         # Load your image
-        image = Image.open('logo.png'
+        image = Image.open('logo.png')
         # Display the image in the sidebar at the top left
         st.sidebar.image(image, width=70)
 
