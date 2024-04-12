@@ -15,6 +15,8 @@ import openai
 import os
 import pandas as pd
 from streamlit_pills import pills
+from PIL import Image
+
 
 # from llama_index.llms.palm import PaLM
 
@@ -62,6 +64,11 @@ class StreamlitChatPack(BaseLlamaPack):
             initial_sidebar_state="auto",
             menu_items=None,
         )
+
+        # Load your image
+        image = Image.open('logo.png'
+        # Display the image in the sidebar at the top left
+        st.sidebar.image(image, width=70)
 
         if "messages" not in st.session_state:  # Initialize the chat messages history
             st.session_state["messages"] = [
